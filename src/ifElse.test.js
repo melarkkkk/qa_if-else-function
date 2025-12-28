@@ -72,4 +72,25 @@ describe('ifElse', () => {
 
     expect(ifElse(condition, first, second)).toBeUndefined();
   });
+
+  it('should call all the callbacks with no arguments', () => {
+    const condition1 = jest.fn(() => false);
+    const condition2 = jest.fn(() => true);
+    const first = jest.fn();
+    const second = jest.fn();
+
+    expect(ifElse(condition1, first, second)).toBeUndefined();
+
+    expect(condition1).toHaveBeenCalledTimes(1);
+    expect(condition1).toHaveBeenCalledWith();
+    expect(second).toHaveBeenCalledTimes(1);
+    expect(second).toHaveBeenCalledWith();
+
+    expect(ifElse(condition2, first, second)).toBeUndefined();
+
+    expect(condition2).toHaveBeenCalledTimes(1);
+    expect(condition2).toHaveBeenCalledWith();
+    expect(first).toHaveBeenCalledTimes(1);
+    expect(first).toHaveBeenCalledWith();
+  });
 });
